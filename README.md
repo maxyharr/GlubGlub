@@ -12,6 +12,10 @@ Model Context Protocol (MCP) is a standardized communication protocol that allow
 
 ### Setting Up GitHub MCP Server in VS Code
 
+There are two main approaches to configuring GitHub MCP server in VS Code:
+
+#### Option 1: Using Docker (Recommended)
+
 1. **Install the GitHub extension for VS Code**
    - Open VS Code
    - Go to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X on Mac)
@@ -23,8 +27,40 @@ Model Context Protocol (MCP) is a standardized communication protocol that allow
    - Type "GitHub: Sign In" and select it
    - Follow the authentication flow to connect your GitHub account
 
-3. **Configure MCP Integration**
-   - Ensure you have the latest version of GitHub Copilot installed
+3. **Configure Docker-based MCP Integration**
+   - Ensure Docker is installed on your system
+   - Generate a GitHub Personal Access Token with necessary permissions
+   - In settings.json, add or modify:
+   ```json
+   "mcp": {
+     "servers": {
+       "github": {
+         "command": "docker",
+         "args": [
+           "run",
+           "-i",
+           "--rm",
+           "-e",
+           "GITHUB_PERSONAL_ACCESS_TOKEN",
+           "ghcr.io/github/github-mcp-server"
+         ],
+         "env": {
+           "GITHUB_PERSONAL_ACCESS_TOKEN": "your_personal_access_token"
+         }
+       }
+     }
+   }
+   ```
+
+#### Option 2: Using Copilot Advanced Settings
+
+1. **Install GitHub Copilot**
+   - Open VS Code
+   - Go to the Extensions view
+   - Search for "GitHub Copilot"
+   - Install and configure GitHub Copilot
+
+2. **Enable MCP Support**
    - In settings.json, add or modify:
    ```json
    "github.copilot.advanced": {
